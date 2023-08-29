@@ -41,12 +41,14 @@ func FormatColumnTime(dialect Dialect, dbLocation *time.Location, col *schemas.C
 		}
 		return t.Format(layout), nil
 	case schemas.DateTime, schemas.TimeStamp:
-		layout := "2006-01-02 15:04:05"
-		if col.Length > 0 {
-			// we can use int(...) casting here as it's very unlikely to a huge sized field
-			layout += "." + strings.Repeat("0", int(col.Length))
-		}
-		return t.Format(layout), nil
+		//layout := "2006-01-02 15:04:05"
+		//if col.Length > 0 {
+		//	// we can use int(...) casting here as it's very unlikely to a huge sized field
+		//	layout += "." + strings.Repeat("0", int(col.Length))
+		//}
+		//return t.Format(layout), nil
+		// 修复  ORA-01861: literal does not match format string
+		return t, nil
 	case schemas.Varchar:
 		return t.Format("2006-01-02 15:04:05"), nil
 	case schemas.TimeStampz:
